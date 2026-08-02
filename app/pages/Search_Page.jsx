@@ -8,12 +8,21 @@ import SearchBar from "@/images/home_page/Search_Bar.webp";
 import Cds from "@/images/search_page/Cds.webp";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
+import TrackCard from "../components/TrackCard";
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
   const [results, setResults] = useState([]);
+
   const router = useRouter();
+  const [selectedTrack, setSelectedTrack] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectedVariant, setSelectedVariant] = useState(null);
+
+  function handleClose() {
+    setSelectedTrack(null);
+  }
 
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -102,8 +111,8 @@ export default function SearchPage() {
           gridTemplateColumns: "repeat(5, 1fr)",
           width: "100%",
           height: "32vh",
-          padding: "0 0.5%",
-          gap: "1%",
+          padding: "0 3%",
+          gap: "0%",
         }}
       >
         <div style={{ gridColumn: "1 / span 2" }} />
@@ -114,7 +123,7 @@ export default function SearchPage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              padding: "1%",
+              padding: "0",
             }}
           >
             <TrackResult
@@ -122,6 +131,13 @@ export default function SearchPage() {
               index={i + 1}
               variant={i % 2 === 0 ? "purple" : "grey"}
               rotation={rotations[i]}
+              onClick={() => {
+                if (track) {
+                  setSelectedTrack(track);
+                  setSelectedIndex(i + 1);
+                  setSelectedVariant(i % 2 === 0 ? "purple" : "grey");
+                }
+              }}
             />
           </div>
         ))}
@@ -135,8 +151,8 @@ export default function SearchPage() {
           width: "100%",
           height: "32vh",
           marginTop: "1vh",
-          padding: "0 0.5%",
-          gap: "1%",
+          padding: "0 3%",
+          gap: "0%",
         }}
       >
         {[slots[3], slots[4], slots[5], slots[6], slots[7]].map((track, i) => (
@@ -154,6 +170,13 @@ export default function SearchPage() {
               index={i + 4}
               variant={i % 2 === 0 ? "grey" : "purple"}
               rotation={rotations[i]}
+              onClick={() => {
+                if (track) {
+                  setSelectedTrack(track);
+                  setSelectedIndex(i + 4);
+                  setSelectedVariant(i % 2 === 0 ? "purple" : "grey");
+                }
+              }}
             />
           </div>
         ))}
@@ -167,8 +190,8 @@ export default function SearchPage() {
           width: "100%",
           height: "32vh",
           marginTop: "1vh",
-          padding: "0 0.5%",
-          gap: "1%",
+          padding: "0 3%",
+          gap: "0%",
         }}
       >
         {[slots[8], slots[9], slots[10], slots[11], slots[12]].map(
@@ -187,11 +210,46 @@ export default function SearchPage() {
                 index={i + 9}
                 variant={i % 2 === 0 ? "purple" : "grey"}
                 rotation={rotations[i]}
+                onClick={() => {
+                  if (track) {
+                    setSelectedTrack(track);
+                    setSelectedIndex(i + 9);
+                    setSelectedVariant(i % 2 === 0 ? "purple" : "grey");
+                  }
+                }}
               />
             </div>
           ),
         )}
       </div>
+
+      {/* Overlay */}
+      {selectedTrack && (
+        <div
+          onClick={handleClose}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            zIndex: 100,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {/* Stop click from closing when clicking the card itself */}
+          <div onClick={(e) => e.stopPropagation()} style={{ width: "60%" }}>
+            <TrackCard
+              track={selectedTrack}
+              index={selectedIndex}
+              variant={selectedVariant}
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }

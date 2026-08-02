@@ -10,13 +10,24 @@ export async function GET(request) {
     },
     body: "grant_type=client_credentials",
   });
-  const { access_token } = await tokenRes.json();
+ const tokenData = await tokenRes.json();
+const { access_token } = tokenData;
+    console.log("Token response:", tokenData);
+  
+     if (!tokenData.access_token) {
+    return Response.json({ error: "Failed to get token" }, { status: 401 });
+  }
 
   const searchRes = await fetch(
     `https://api.spotify.com/v1/search?q=${query}&type=track&limit=10`,
     { headers: { Authorization: `Bearer ${access_token}` } }
   );
   const data = await searchRes.json();
+    console.log("Search response:", data);
+
+  if (!data.tracks) {
+    return Response.json({ error: "No tracks found" }, { status: 404 });
+  }
 
   return Response.json(data.tracks.items);
 }

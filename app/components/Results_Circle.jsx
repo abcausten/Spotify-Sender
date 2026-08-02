@@ -4,15 +4,22 @@ import PurpleCircle from "@/images/search_page/Purple_Circle.webp";
 import GreyCircle from "@/images/search_page/Grey_Circle.webp";
 import CdImage from "@/images/search_page/Cds.webp";
 
-export default function TrackResult({ track, index, variant, rotation }) {
+export default function TrackResult({
+  track,
+  index,
+  variant,
+  rotation,
+  onClick,
+}) {
   const isGrey = variant === "grey";
   const id = `curve-${index}`;
 
   return (
     <div
+      onClick={onClick}
       style={{
         position: "relative",
-        width: "100%",
+        width: "97%",
         aspectRatio: "1",
       }}
     >
@@ -54,8 +61,8 @@ export default function TrackResult({ track, index, variant, rotation }) {
             }}
           >
             <defs>
-              <path id={`${id}-top`} d="M 20,100 A 80,80 0 0,1 180,100" />
-              <path id={`${id}-bottom`} d="M 20,100 A 80,80 0 0,0 180,100" />
+              <path id={`${id}-top`} d="M 20,100 A 80,83 0 0,1 180,100" />
+              <path id={`${id}-bottom`} d="M 20,100 A 80,83 0 0,0 180,100" />
             </defs>
             {/* Song name on top */}
             <text
@@ -65,7 +72,7 @@ export default function TrackResult({ track, index, variant, rotation }) {
             >
               <textPath
                 href={`#${id}-top`}
-                startOffset="50%"
+                startOffset="40%"
                 textAnchor="middle"
               >
                 {track.name}
@@ -76,10 +83,11 @@ export default function TrackResult({ track, index, variant, rotation }) {
               fontSize="20"
               fill={isGrey ? "#D1D6FC" : "#373737"}
               fontFamily="Space Mono, monospace"
+              fontWeight="400"
             >
               <textPath
                 href={`#${id}-bottom`}
-                startOffset="50%"
+                startOffset="60%"
                 textAnchor="middle"
               >
                 {track.artists[0].name}
@@ -91,8 +99,8 @@ export default function TrackResult({ track, index, variant, rotation }) {
           <Image
             src={CdImage}
             alt="CD overlay"
-            width={160}
-            height={160}
+            width={180}
+            height={180}
             style={{
               position: "absolute",
               top: "50%",
@@ -110,17 +118,17 @@ export default function TrackResult({ track, index, variant, rotation }) {
       <div
         style={{
           position: "absolute",
-          bottom: "4px",
-          left: "4px",
-          width: "28px",
-          height: "28px",
+          bottom: "2px",
+          left: "6px",
+          width: "35px",
+          height: "35px",
           borderRadius: "50%",
           backgroundColor: isGrey ? "#2e2e38" : "#c5c8e8",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           fontSize: "20px",
-          fontWeight: 700,
+          fontWeight: 400,
           color: isGrey ? "#c5c8e8" : "#2e2e38",
           fontFamily: "Space Mono, monospace",
         }}
