@@ -28,6 +28,7 @@ export default function TrackResult({
         src={isGrey ? GreyCircle : PurpleCircle}
         alt={track ? track.name : "empty"}
         fill
+        sizes="20vw"
         style={{ borderRadius: "50%", objectFit: "cover" }}
       />
 

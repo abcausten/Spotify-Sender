@@ -1,3 +1,2 @@
-import SearchPage from "@/pages/Search_Page.jsx";
-
+import SearchPage from "@/pages/Search_Page";
 export default SearchPage;

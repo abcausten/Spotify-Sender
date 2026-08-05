@@ -37,6 +37,8 @@ export default function SearchPage() {
     async function fetchResults() {
       const res = await fetch(`/api/search?q=${query}`);
       const tracks = await res.json();
+      console.log("full response:", tracks);
+      console.log("first track:", tracks[0]);
       setResults(tracks);
     }
     if (query) fetchResults();

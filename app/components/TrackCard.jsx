@@ -90,7 +90,7 @@ export default function TrackCard({ track, index, variant }) {
               top: "50%",
               left: "50%",
               width: "5vw",
-              aspectRatio: "1",
+              height: "5vw",
               transform: "translate(-50%, -50%)",
               borderRadius: "50%",
               objectFit: "screen",
@@ -98,6 +98,36 @@ export default function TrackCard({ track, index, variant }) {
               mixBlendMode: "screen",
             }}
           />
+          {/* Play button — stays centered on CD */}
+          <div
+            style={{
+              width: "40px",
+              height: "40px",
+              overflow: "hidden",
+              borderRadius: "50%",
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              zIndex: 5,
+            }}
+          >
+            <iframe
+              src={`https://open.spotify.com/embed/track/${track.id}?autoplay=1`}
+              width="300"
+              height="80"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+                border: "none",
+                marginBottom: "-3.5px",
+                marginRight: "-3.5px",
+              }}
+            />
+          </div>
 
           {/* Index badge */}
           <div
@@ -225,11 +255,7 @@ export default function TrackCard({ track, index, variant }) {
             color: "#ffffff",
             fontSize: "14px",
           }}
-          onClick={() =>
-            router.push(
-              `/edit?track=${encodeURIComponent(JSON.stringify(track))}`,
-            )
-          }
+          onClick={() => router.push(`/edit?id=${track.id}`)}
         >
           Edit
         </button>
@@ -246,11 +272,7 @@ export default function TrackCard({ track, index, variant }) {
             color: "#ffffff",
             fontSize: "14px",
           }}
-          onClick={() =>
-            router.push(
-              `/send?track=${encodeURIComponent(JSON.stringify(track))}`,
-            )
-          }
+          onClick={() => router.push(`/edit?id=${track.id}`)}
         >
           Send
         </button>

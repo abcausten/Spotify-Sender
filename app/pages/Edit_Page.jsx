@@ -3,10 +3,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import BackButton from "@/images/send_page/BackButton.webp";
 import Background from "@/images/send_page/Send_Background.jpg";
-import EditDial from "../components/Edit_Circle";
+import EditDial from "@/components/Edit_Circle";
+import { useSearchParams } from "next/navigation";
 
 export default function Edit_Page() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const trackId = searchParams.get("id");
+
   return (
     <main>
       <div
@@ -60,9 +64,9 @@ export default function Edit_Page() {
         </div>
         <div>
           <EditDial
-            onPhoto={() => console.log("photo")}
-            onVideo={() => console.log("video")}
-            onShare={() => console.log("share")}
+            onPhoto={() => router.push(`/photo?id=${trackId}`)}
+            onShare={() => router.push(`/share?id=${trackId}`)}
+            onVideo={() => router.push(`/video?id=${trackId}`)}
           />
         </div>
       </div>

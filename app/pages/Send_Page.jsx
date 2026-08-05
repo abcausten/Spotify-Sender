@@ -4,11 +4,32 @@ import { useRouter } from "next/navigation";
 import BackButton from "@/images/send_page/BackButton.webp";
 import Background from "@/images/send_page/Send_Background.jpg";
 import CdCase from "@/images/send_page/Cd_Case.webp";
+import EditDial from "../components/Edit_Circle";
 
 export default function Send_Page() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const track = JSON.parse(decodeURIComponent(searchParams.get("track")));
+
   return (
     <main>
+      <EditDial
+        onPhoto={() =>
+          router.push(
+            `/photo?track=${encodeURIComponent(JSON.stringify(track))}`,
+          )
+        }
+        onShare={() =>
+          router.push(
+            `/share?track=${encodeURIComponent(JSON.stringify(track))}`,
+          )
+        }
+        onVideo={() =>
+          router.push(
+            `/video?track=${encodeURIComponent(JSON.stringify(track))}`,
+          )
+        }
+      />
       <div
         style={{
           position: "relative",
