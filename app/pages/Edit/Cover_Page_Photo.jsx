@@ -2,11 +2,29 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import BackButton from "@/images/send_page/BackButton.webp";
-import Background from "@/images/home_page/Home_Page.jpg";
+import Background from "@/images/send_page/Send_Background.jpg";
+import Open_Icon from "@/images/Photo_Video/Open_Icon.webp";
+import Share_Icon from "@/images/Photo_Video/Share_Icon.webp";
 import Case from "@/images/Photo_Video/Case.webp";
+import { useEffect } from "react";
+import { useRef, useState } from "react";
 
 export default function Cover_Page_Photo() {
   const router = useRouter();
+  const fileInputRef = useRef(null);
+  const [uploadedImage, setUploadedImage] = useState(null);
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem("uploadedImage");
+    if (stored) setUploadedImage(stored);
+  }, []);
+
+  function handleUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setUploadedImage(url);
+  }
 
   const buttonStyle = {
     position: "absolute",
@@ -33,12 +51,12 @@ export default function Cover_Page_Photo() {
     pointerEvents: "none",
   };
 
-  const curvedText = (id, text, offset = "25%") => (
+  const curvedText = (id, text, offset = "35%") => (
     <svg
       viewBox="0 0 100 100"
       style={{
         position: "absolute",
-        top: 0,
+        top: 5,
         left: 0,
         width: "100%",
         height: "100%",
@@ -49,13 +67,13 @@ export default function Cover_Page_Photo() {
       <defs>
         <path
           id={id}
-          d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"
+          d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
         />
       </defs>
       <text
         fontFamily="Space Mono, monospace"
-        fontSize="14"
-        fontWeight="700"
+        fontSize="15"
+        fontWeight="400"
         fill="#c5c8e8"
       >
         <textPath href={`#${id}`} startOffset={offset} textAnchor="middle">
@@ -105,7 +123,7 @@ export default function Cover_Page_Photo() {
             zIndex: 10,
             cursor: "pointer",
           }}
-          onClick={() => router.back()}
+          onClick={() => router.push("/edit")}
         >
           <Image
             src={BackButton}
@@ -120,7 +138,8 @@ export default function Cover_Page_Photo() {
         <div
           style={{
             position: "absolute",
-            top: "15vh",
+            top: "24vh",
+            right: "-1vw",
             width: "100%",
             textAlign: "center",
             fontFamily: "Space Mono, monospace",
@@ -133,7 +152,7 @@ export default function Cover_Page_Photo() {
           Make Your Cover
         </div>
 
-        {/* Case image — centered */}
+        {/* Case — centered */}
         <div
           style={{
             position: "absolute",
@@ -143,6 +162,24 @@ export default function Cover_Page_Photo() {
             zIndex: 3,
           }}
         >
+          {/* Uploaded image sits behind the case */}
+          {uploadedImage && (
+            <img
+              src={uploadedImage}
+              alt="uploaded"
+              style={{
+                position: "absolute",
+                top: "12%",
+                left: "16%",
+                width: "15.7vw",
+                height: "15vw",
+                objectFit: "cover",
+                zIndex: 1,
+                mixBlendMode: "multiply",
+              }}
+            />
+          )}
+
           <Image
             src={Case}
             alt="Case"
@@ -153,8 +190,20 @@ export default function Cover_Page_Photo() {
           />
         </div>
 
+        {/* Hidden file input */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={handleUpload}
+        />
+
         {/* Upload button — left upper */}
-        <div style={{ ...buttonStyle, top: "35%", left: "25%" }}>
+        <div
+          style={{ ...buttonStyle, top: "35%", left: "25%" }}
+          onClick={() => fileInputRef.current.click()}
+        >
           <div style={iconCircleStyle}>
             <svg
               width="50%"
@@ -175,7 +224,15 @@ export default function Cover_Page_Photo() {
         </div>
 
         {/* Open button — left lower */}
-        <div style={{ ...buttonStyle, top: "58%", left: "25%" }}>
+        <div
+          style={{ ...buttonStyle, top: "58%", left: "25%" }}
+          onClick={() => {
+            if (uploadedImage) {
+              sessionStorage.setItem("uploadedImage", uploadedImage);
+            }
+            router.push("/photo_edit");
+          }}
+        >
           <div style={iconCircleStyle}>
             <svg
               width="50%"
@@ -186,17 +243,23 @@ export default function Cover_Page_Photo() {
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-            >
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-              <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" />
-            </svg>
+            ></svg>
+            <Image
+              src={Open_Icon}
+              alt="Share"
+              style={{
+                position: "absolute",
+                left: "3.5vw",
+                height: "6vh",
+                width: "6vh",
+              }}
+            ></Image>
           </div>
           {curvedText("open-path", "Open", "25%")}
         </div>
 
-        {/* Download Cover button — right */}
-        <div style={{ ...buttonStyle, top: "35%", right: "20%" }}>
+        {/* Share button — right */}
+        <div style={{ ...buttonStyle, top: "35%", right: "25%" }}>
           <div style={iconCircleStyle}>
             <svg
               width="50%"
@@ -207,13 +270,18 @@ export default function Cover_Page_Photo() {
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-            >
-              <polyline points="16 16 12 12 8 16" />
-              <line x1="12" y1="12" x2="12" y2="21" />
-              <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3" />
-            </svg>
+            ></svg>
           </div>
-          {curvedText("download-path", "Download Cover", "25%")}
+          <Image
+            src={Share_Icon}
+            alt="Share"
+            style={{
+              position: "absolute",
+              height: "2vh",
+              width: "6vh",
+            }}
+          ></Image>
+          {curvedText("share-path", "Share", "25%")}
         </div>
       </div>
     </main>
