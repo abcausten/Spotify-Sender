@@ -128,7 +128,13 @@ export default function Photo_Page() {
             zIndex: 10,
             cursor: "pointer",
           }}
-          onClick={() => router.push("/photo")}
+          onClick={() => {
+            if (uploadedImage) {
+              sessionStorage.setItem("uploadedImage", uploadedImage);
+              sessionStorage.setItem("uploadedImagePhoto", uploadedImagePhoto);
+            }
+            router.push("/photo");
+          }}
         >
           <Image
             src={BackButton}

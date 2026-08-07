@@ -132,7 +132,13 @@ export default function Video_Page() {
             zIndex: 10,
             cursor: "pointer",
           }}
-          onClick={() => router.push("/video")}
+          onClick={() => {
+            if (uploadedImage) {
+              sessionStorage.setItem("uploadedImage", uploadedImage);
+              sessionStorage.setItem("uploadedVideo", uploadedVideo);
+            }
+            router.push("/video");
+          }}
         >
           <Image
             src={BackButton}
