@@ -53,21 +53,47 @@ npm run dev
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
+
+```
 app/
 ├── (routes)/
-│ ├── search/ # Search results page
-│ ├── edit/ # Edit CD page
-│ ├── send/ # Send page
-│ ├── photo/ # Photo cover page
-│ ├── photo-edit/ # Photo edit page
-│ ├── video/ # Video CD page
-│ └── share/ # Share page
+│   ├── search/
+│   │   └── page.js
+│   ├── edit/
+│   │   └── page.js
+│   ├── send/
+│   │   └── page.js
+│   ├── photo/
+│   │   └── page.js
+│   ├── photo-edit/
+│   │   └── page.js
+│   ├── video/
+│   │   └── page.js
+│   └── share/
+│       └── page.js
 ├── api/
-│ └── search/ # Spotify API route
-├── components/ # Reusable components
-├── images/ # Static assets
-└── pages/ # Page components
-
+│   └── search/
+│       └── route.js
+├── components/
+│   ├── ResultsCircle.jsx
+│   ├── TrackCard.jsx
+│   └── EditDial.jsx
+├── images/
+├── pages/
+│   ├── Edit/
+│   │   ├── Cover_Page_Photo.jsx
+│   │   ├── Cover_Page_Video.jsx
+│   │   ├── Photo_Page.jsx
+│   │   ├── Share_Page.jsx
+│   │   └── Video_Page.jsx
+│   ├── Edit_Page.jsx
+│   ├── Home_Page.jsx
+│   ├── Search_Page.jsx
+│   └── Send_Page.jsx
+├── global.css
+├── layout.tsx
+└── page.tsx
+```
 ## Getting Spotify API Keys
 
 1. Go to [developer.spotify.com](https://developer.spotify.com)
