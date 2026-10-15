@@ -53,7 +53,6 @@ npm run dev
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
-```
 app/
 ├── (routes)/
 │ ├── search/ # Search results page
@@ -68,7 +67,6 @@ app/
 ├── components/ # Reusable components
 ├── images/ # Static assets
 └── pages/ # Page components
-```
 
 ## Getting Spotify API Keys
 
