@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Spotify Sender
+
+A full-stack music sharing web app built with Next.js that integrates the Spotify API to search tracks and generate personalized CD cases with custom photo and video overlays.
+
+## Features
+
+1. **Search** — enter a song name and the app fetches matching tracks using the Spotify API
+2. **Browse** — results are displayed as circular CDs with the album art
+3. **Select** — click a result to open a track card with song details and a preview
+4. **Edit** — customize your CD case by uploading a photo or video overlay
+5. **Preview** — preview and share your personalized CD case
+
+## Future Changes 
+In the future I plan to implement the actual sending process of the cd via text message. I also plan on implementing a easier cloning flow as currently a user needs their own set of Spotify API keys to access the program. 
+
+## Tech Stack
+
+- **Framework**: Next.js (App Router)
+- **Language**: JavaScript
+- **Styling**: Inline CSS with responsive `vw`/`vh` units
+- **APIs**: Spotify Web API, Web File API, Web Storage API
+- **Design**: Figma
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js
+- A Spotify Developer account
 
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/spotify-sender.git
+cd spotify-sender
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env.local` file in the root of the project:
+SPOTIFY_CLIENT_ID=your_client_id
+SPOTIFY_CLIENT_SECRET=your_client_secret
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+4. Run the development server:
+```bash
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
+```
+app/
+├── (routes)/
+│ ├── search/ # Search results page
+│ ├── edit/ # Edit CD page
+│ ├── send/ # Send page
+│ ├── photo/ # Photo cover page
+│ ├── photo-edit/ # Photo edit page
+│ ├── video/ # Video CD page
+│ └── share/ # Share page
+├── api/
+│ └── search/ # Spotify API route
+├── components/ # Reusable components
+├── images/ # Static assets
+└── pages/ # Page components
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Getting Spotify API Keys
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Go to [developer.spotify.com](https://developer.spotify.com)
+2. Create a new app
+3. Copy the **Client ID** and **Client Secret**
+4. Add them to your `.env.local` file
